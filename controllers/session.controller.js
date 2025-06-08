@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const User = require('../models/user.model');
-const crypto = require('crypto'); // Import crypto module
+const nodemailer = require('nodemailer'); 
+const MailerService  = require("../service/MailerService")
 
 module.exports.signup = async (req, res) => {
     try {
@@ -32,6 +33,7 @@ module.exports.signup = async (req, res) => {
             password: hashedPassword
         });
 
+        MailerService.sendWelcomeMail(username,email)   
         res.status(201).json({
             success: true,
             message: 'User registered successfully',
